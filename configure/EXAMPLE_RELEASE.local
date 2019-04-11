@@ -1,0 +1,4 @@
+MOTOR=
+-include $(MOTOR)/configure/RELEASE
+# path to motorAMCI is needed to build the IOC inside motorAMCI, but outside motor
+MOTOR_AMCI=

@@ -5,6 +5,9 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
+# The following are used for debugging messages.
+#!USR_CXXFLAGS += -DDEBUG
+
 #=============================
 # Build the IOC application
 
@@ -16,10 +19,21 @@ DBD += amci.dbd
 amci_DBD += base.dbd
 
 # Include dbd files from all support applications:
-#amci_DBD += xxx.dbd
+#ifdef ASYN
+amci_DBD += asyn.dbd
+#endif
+amci_DBD += motorSupport.dbd
+amci_DBD += devAMCI.dbd
 
 # Add all the support libraries needed by this IOC
-#amci_LIBS += xxx
+amci_LIBS += amci
+amci_LIBS += motor
+#ifdef ASYN
+amci_LIBS += asyn
+#endif
+#ifdef SNCSEQ
+amci_LIBS += seq pv
+#endif
 
 # amci_registerRecordDeviceDriver.cpp derives from amci.dbd
 amci_SRCS += amci_registerRecordDeviceDriver.cpp
