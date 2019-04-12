@@ -1,8 +1,5 @@
 #!../../bin/linux-x86_64/amci
 
-## You may have to change amci to something else
-## everywhere it appears in this file
-
 < envPaths
 
 cd "${TOP}"
@@ -11,11 +8,20 @@ cd "${TOP}"
 dbLoadDatabase "dbd/amci.dbd"
 amci_registerRecordDeviceDriver pdbbase
 
-## Load record instances
-#dbLoadRecords("db/xxx.db","user=kpetersn")
-
 cd "${TOP}/iocBoot/${IOC}"
+
+## motorUtil (allstop & alldone)
+dbLoadRecords("$(MOTOR)/db/motorUtil.db", "P=amci:")
+
+##
+#!< st.cmd.ANG1
+< motor.cmd.ANF2
+
 iocInit
 
-## Start any sequence programs
-#seq sncxxx,"user=kpetersn"
+< poller.cmd.ANF2
+
+## motorUtil (allstop & alldone)
+motorUtilInit("amci:")
+
+# Boot complete

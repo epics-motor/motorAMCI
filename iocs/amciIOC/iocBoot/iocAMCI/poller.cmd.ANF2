@@ -1,0 +1,7 @@
+# ANF2StartPoller(
+#   portName,         The controller's asyn port
+#   movingPollPeriod, The time in ms between polls when any axis is moving
+#   idlePollPeriod)   The time in ms between polls when no axis is moving
+#
+ANF2StartPoller("$(PORT1)", 200, 1000)
+ANF2StartPoller("$(PORT2)", 200, 1000)

@@ -13,9 +13,9 @@
 #                       int noAutoConnect,
 #                       int noProcessEos);
 # One per controller.  One controller can support up to six drivers.
-drvAsynIPPortConfigure("ang1_1","164.54.53.107:502",0,0,1)
-#drvAsynIPPortConfigure("ang1_2","164.54.53.23:502",0,0,1)
-#drvAsynIPPortConfigure("ang1_3","164.54.xxx.xxx:502",0,0,1)
+drvAsynIPPortConfigure("ang1_1","192.168.1.107:502",0,0,1)
+#drvAsynIPPortConfigure("ang1_2","192.168.1.32:502",0,0,1)
+#drvAsynIPPortConfigure("ang1_3","192.168.xxx.xxx:502",0,0,1)
 
 #modbusInterposeConfig(const char *portName,
 #                      modbusLinkType linkType,

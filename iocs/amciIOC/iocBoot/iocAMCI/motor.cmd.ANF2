@@ -36,13 +36,13 @@ drvModbusAsynConfigure("$(PORT2)_Out", "$(PORT2)_IP", 0, 16, 1024,  60, 6, 1, "A
 #!asynSetTraceInfoMask "$(PORT1)_Out",0,15
 
 # Asyn records for debugging
-#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=IOC:,R=asyn:c1ip,PORT=$(PORT1)_IP,ADDR=0,OMAX=256,IMAX=256")
-#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=IOC:,R=asyn:c1in,PORT=$(PORT1)_In,ADDR=0,OMAX=256,IMAX=256")
-#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=IOC:,R=asyn:c1out,PORT=$(PORT1)_Out,ADDR=0,OMAX=256,IMAX=256")
-#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=IOC:,R=asyn:c1,PORT=$(PORT1),ADDR=0,OMAX=256,IMAX=256")
+#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=amci:,R=asyn:c1ip,PORT=$(PORT1)_IP,ADDR=0,OMAX=256,IMAX=256")
+#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=amci:,R=asyn:c1in,PORT=$(PORT1)_In,ADDR=0,OMAX=256,IMAX=256")
+#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=amci:,R=asyn:c1out,PORT=$(PORT1)_Out,ADDR=0,OMAX=256,IMAX=256")
+#!dbLoadRecords("$(ASYN)/db/asynRecord.db","P=amci:,R=asyn:c1,PORT=$(PORT1),ADDR=0,OMAX=256,IMAX=256")
 
 # Load the motor records
-dbLoadTemplate("templates/motor.substitutions.ANF2")
+dbLoadTemplate("motor.substitutions.ANF2")
 
 # AMCI ANF2 stepper controller driver support
 #
@@ -89,19 +89,3 @@ ANF2CreateAxis("$(PORT2)", 4, "0x84000000", 100, 0)
 ANF2CreateAxis("$(PORT2)", 5, "0x84000000", 100, 0)
 
 # NOTE: the poller needs to be started after iocInit
-
-
-
-##########
-# iocInit
-##########
-
-
-
-# ANF2StartPoller(
-#   portName,         The controller's asyn port
-#   movingPollPeriod, The time in ms between polls when any axis is moving
-#   idlePollPeriod)   The time in ms between polls when no axis is moving
-#
-ANF2StartPoller("$(PORT1)", 200, 1000)
-ANF2StartPoller("$(PORT2)", 200, 1000)
