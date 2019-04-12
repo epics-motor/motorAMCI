@@ -25,7 +25,7 @@ pattern
 
 }
 
-file "$(MOTOR)/motorApp/Db/ANF2Aux.template"
+file "$(TOP)/db/ANF2Aux.template"
 {
 pattern
 {P,     R,        PORT,    ADDR}
