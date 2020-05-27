@@ -12,12 +12,13 @@ cache:
 env:
   global:
     - SETUP_PATH=.ci
-    - MODULES="sncseq ipac asyn autosave busy motor"
+    - MODULES="sncseq ipac asyn autosave busy modbus motor"
     - SNCSEQ=R2-2-8
     - IPAC=master
     - ASYN=R4-38
     - AUTOSAVE=R5-9
     - BUSY=R1-7-1
+    - MODBUS=R3-0
     - MOTOR=master
     - MOTOR_RECURSIVE=NO
     
