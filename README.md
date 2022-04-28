@@ -2,7 +2,8 @@
 EPICS motor drivers for the following [AMCI](https://www.amci.com/) controllers:<br>
 AMCI ANG1 Stepper Motor Controller/Driver, ANF1E/ANF1/ANF2E/ANF2 Stepper Motor Controllers. 
 
-[![Build Status](https://travis-ci.org/epics-motor/motorAMCI.png)](https://travis-ci.org/epics-motor/motorAMCI)
+[![Build Status](https://github.com/epics-motor/motorAMCI/actions/workflows/ci-scripts-build.yml/badge.svg)](https://github.com/epics-motor/motorAMCI/actions/workflows/ci-scripts-build.yml)
+<!--[![Build Status](https://travis-ci.org/epics-motor/motorAMCI.png)](https://travis-ci.org/epics-motor/motorAMCI)-->
 
 motorAMCI is a submodule of [motor](https://github.com/epics-modules/motor).  When motorAMCI is built in the ``motor/modules`` directory, no manual configuration is needed.
 
