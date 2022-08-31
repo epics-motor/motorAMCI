@@ -357,14 +357,14 @@ asynStatus ANG1Axis::move(double position, int relative, double minVelocity, dou
   asynStatus status;
   int velo, distance, move_bit;
   
-  printf(" ** ANG1Axis::move called, relative = %d\n", relative);
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, " ** ANG1Axis::move called, relative = %d\n", relative);
 
   status = sendAccelAndVelocity(acceleration, maxVelocity);
   
   //velo = maxVelocity * SOME_SCALE_FACTOR
   velo = NINT(maxVelocity);
   if (relative) {
-    printf(" ** relative move called\n");
+    asynPrint(pasynUser_, ASYN_TRACE_FLOW, " ** relative move called\n");
     //status = pC_->writeReg32(SPD_UPR, velo, DEFAULT_CONTROLLER_TIMEOUT);
 	//distance = position *  SOM_OTHER_SCALE_FACTOR;
 	distance = NINT(position);
@@ -375,16 +375,16 @@ asynStatus ANG1Axis::move(double position, int relative, double minVelocity, dou
     status = pC_->writeReg16(CMD_MSW, move_bit, DEFAULT_CONTROLLER_TIMEOUT);
   } else {
     // absolute
-    printf(" ** absolute move called\n");
+    asynPrint(pasynUser_, ASYN_TRACE_FLOW, " ** absolute move called\n");
     //status = pC_->writeReg32(SPD_UPR, velo, DEFAULT_CONTROLLER_TIMEOUT);
 	//distance = position *  SOM_OTHER_SCALE_FACTOR;
 	distance = NINT(position);
-	printf(" ** distance = %d\n", distance);
+	asynPrint(pasynUser_, ASYN_TRACE_FLOW, " ** distance = %d\n", distance);
     status = pC_->writeReg32(POS_WR_UPR, distance, DEFAULT_CONTROLLER_TIMEOUT);
 	move_bit = 0x0;
     status = pC_->writeReg16(CMD_MSW, move_bit, DEFAULT_CONTROLLER_TIMEOUT);
 	move_bit = 0x1;
-    status = pC_->writeReg16(CMD_MSW, move_bit, DEFAULT_CONTROLLER_TIMEOUT);	
+    status = pC_->writeReg16(CMD_MSW, move_bit, DEFAULT_CONTROLLER_TIMEOUT);
   }
   // Delay the first status read, give the controller some time to return moving status
   epicsThreadSleep(0.05);
@@ -459,7 +459,8 @@ asynStatus ANG1Axis::stop(double acceleration)
   int stop_bit;
   //static const char *functionName = "ANG1Axis::stop";
   
-  printf("\n  STOP \n\n");
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "\n  STOP \n");
+  //kg printf("\n  STOP \n\n");
   
   stop_bit = 0x0;
   status = pC_->writeReg16(CMD_MSW, stop_bit, DEFAULT_CONTROLLER_TIMEOUT);
@@ -501,9 +502,9 @@ asynStatus ANG1Axis::setClosedLoop(bool closedLoop)
   int disable = 0x0000;
   int cmd;
   
-  printf(" ** setClosedLoop called \n");
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, " ** setClosedLoop called \n");
   if (closedLoop) {
-    printf("setting enable %X\n", enable);
+    asynPrint(pasynUser_, ASYN_TRACE_FLOW, "setting enable %X\n", enable);
 	// Let's reset errors first
 	cmd = 0x0;
     status = pC_->writeReg16(CMD_MSW, cmd, DEFAULT_CONTROLLER_TIMEOUT);
@@ -517,7 +518,7 @@ asynStatus ANG1Axis::setClosedLoop(bool closedLoop)
 	setIntegerParam(pC_->motorStatusPowerOn_, 1);
 	
   } else {
-    printf("setting disable %X\n", disable);
+    asynPrint(pasynUser_, ASYN_TRACE_FLOW, "setting disable %X\n", disable);
     status = pC_->writeReg16(CMD_LSW, disable, DEFAULT_CONTROLLER_TIMEOUT);
     setIntegerParam(pC_->motorStatusPowerOn_, 0);
   }
@@ -551,26 +552,26 @@ asynStatus ANG1Axis::poll(bool *moving)
   // 
   //readReg32(int reg, epicsInt32 *combo, double timeout)
   status = pC_->readReg32(POS_RD_UPR, &read_val, DEFAULT_CONTROLLER_TIMEOUT);
-  printf("ANG1Axis::poll:  Motor position raw: %d\n", read_val);
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "ANG1Axis::poll:  Motor position raw: %d\n", read_val);
   position = (double) read_val;
   setDoubleParam(pC_->motorPosition_, position);
-  printf("ANG1Axis::poll:  Motor position: %f\n", position);
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "ANG1Axis::poll:  Motor position: %f\n", position);
 
   // Read the moving status of this motor
   //
   status = pC_->readReg16(STATUS_1, &read_val, DEFAULT_CONTROLLER_TIMEOUT);
-  //printf("status 1 is 0x%X\n", read_val);
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "status 1 is 0x%X\n", read_val);
   
   // Done logic
   done = ((read_val & 0x8) >> 3);  // status word 1 bit 3 set to 1 when the motor is not in motion.
   setIntegerParam(pC_->motorStatusDone_, done);
   *moving = done ? false:true;
-  printf("done is %d\n", done);
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "done is %d\n", done);
   
   // Read the limit status
   //
   status = pC_->readReg16(STATUS_2, &read_val, DEFAULT_CONTROLLER_TIMEOUT);
-  printf("status 2 is 0x%X\n", read_val);  
+  asynPrint(pasynUser_, ASYN_TRACE_FLOW, "status 2 is 0x%X\n", read_val);  
   
   limit  = (read_val & 0x1);    // a cw limit has been reached
   setIntegerParam(pC_->motorStatusHighLimit_, limit);
