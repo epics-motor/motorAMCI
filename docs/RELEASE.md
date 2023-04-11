@@ -1,5 +1,23 @@
 # motorAMCI Releases
 
+## __R1-0-2 (2023-04-11)__
+R1-0-2 is a release based on the master branch.  
+
+### Changes since R1-0-1
+
+#### New features
+* None
+
+#### Modifications to existing features
+* None
+
+#### Bug fixes
+* Pull request [#2](https://github.com/epics-motor/motorAMCI/pull/2) Replaced printf calls with asynPrint calls in ANG1Driver.cpp
+
+#### Continuous integration
+* Added ci-scripts (v3.0.1)
+* Switched from Travis CI to Github Actions
+
 ## __R1-0-1 (2020-05-11)__
 R1-0-1 is a release based on the master branch.  
 
